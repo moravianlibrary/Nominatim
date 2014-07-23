@@ -27,5 +27,8 @@ compile
 data/wiki_import.sql
 data/wiki_specialphrases.sql
 data/osmosischange.osc
+data/gb_postcode_data.sql.gz
+data/wikipedia_article.sql.bin
+data/wikipedia_redirect.sql.bin
 
 website/js/autocomplete.js
