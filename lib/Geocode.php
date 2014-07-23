@@ -1740,7 +1740,7 @@
 
 				$aResult['importance'] = $aResult['importance'] + ($iCountWords*0.1); // 0.1 is a completely arbitrary number but something in the range 0.1 to 0.5 would seem right
 
-				$aResult['name'] = $aResult['langaddress'];
+				$aResult['name'] = $this->getPrettyName($aResult);
 				// secondary ordering (for results with same importance (the smaller the better):
 				//   - approximate importance of address parts
 				$aResult['foundorder'] = -$aResult['addressimportance']/10;
@@ -1796,6 +1796,141 @@
 
 		} // end lookup()
 
+		private function getPrettyName($aResult) {
+			$pretty_name = "";		
+			$city = "";
+			$country = $aResult['address']['country'];
+			if($aResult['address']['country_code'] == 'us') {
+				$country = "USA";
+				if(isset($aResult['address']['state'])) {
+					$country = $aResult['address']['state'].", USA";
+				}
+			}
+			if($country == 'Česko') {
+				$country = 'Česká republika';
+			}
+			if(isset($aResult['address']['city'])) {
+				$city = $aResult['address']['city'];
+			} else if (isset($aResult['address']['town'])) {
+				$city = $aResult['address']['town'];
+			} else if (isset($aResult['address']['village'])) {
+				$city = $aResult['address']['village'];
+			} else if (isset($aResult['address']['hamlet'])) {
+				$city = $aResult['address']['hamlet'];
+			}
+
+			// House Number
+			if($aResult['type'] == "house") {
+				$pretty_name = $aResult['address']['road']." ".$aResult['address']['house_number'].", ".$city.", ".$country;
+			}
+			// country
+			else if($aResult['type'] == "country") {
+				if($aResult['address']['country_code'] == 'us') {
+					$pretty_name = "USA";
+				} else {
+					$pretty_name = $country;
+				}
+			}
+			// state
+			else if($aResult['type'] == "state") {
+				if($aResult['address']['country_code'] == 'us') {
+					$pretty_name = $country;
+				} else {
+					$pretty_name = $aResult['address']['state'].", ".$country;
+				}
+			}
+			// county
+			else if($aResult['type'] == "county") {
+				$pretty_name = $aResult['address']['county'].", ".$country;
+			}
+			// City
+			else if($aResult['type'] == "city" || $aResult['type'] == "town") {
+				$pretty_name = $city.", ".$country;
+			}
+			// village
+			else if($aResult['type'] == "village") {
+				$pretty_name = $aResult['address']['village'].", ".$city.", ".$country;
+			}
+			//suburb
+			else if($aResult['type'] == 'suburb') {
+				$pretty_name = $aResult['address']['suburb'].", ".$city.", ".$country;
+			}
+			// hamlet
+			else if($aResult['type'] == "hamlet") {
+				$pretty_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
+			}
+
+			else if($aResult['type'] == "administrative") {
+				//suburb  
+				if(isset($aResult['address']['suburb'])) {
+					$pretty_name = $aResult['address']['suburb'].", ".$city.", ".$country;
+				} 
+				//hamlet
+				else if(isset($aResult['address']['hamlet'])) {
+					$pretty_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
+				}
+				//village
+				else if(isset($aResult['address']['village'])) {
+					$pretty_name = $aResult['address']['village'].", ".$city.", ".$country;
+				}
+				// City
+				else if(isset($aResult['address']['city'])) {
+					$pretty_name = $city.", ".$country;
+				}
+				else if(isset($aResult['address']['administrative'])) {
+					$pretty_name = $aResult['address']['administrative'].", ".$country;
+				}
+				else if(isset($aResult['address']['county'])) {
+					$pretty_name = $aResult['address']['county'].", ".$country;
+				}
+				else if(isset($aResult['address']['state'])) {
+					if($aResult['address']['country_code'] == 'us') {
+						$pretty_name = $country;
+					} else {
+						$pretty_name = $aResult['address']['state'].", ".$country;
+					}
+				}
+				else if(isset($aResult['address']['country'])) {
+					if($aResult['address']['country_code'] == 'us') {
+						$pretty_name = "USA";
+					} else {
+						$pretty_name = $country;
+					}
+				}
+			}
+			//jizni morava
+			else if ($aResult['rank_search'] > 16) {
+				$address1 = "";
+				$address2 = "";
+				foreach($aResult['address'] as $sKey => $sValue) {
+					if($address1 == "") {
+						$address1 = $aResult['address'][$sKey];
+					} else {
+						$excluded_keys = array("village", "city", "suburb", "town", "hamlet", "country");
+						if(!in_array($sKey, $excluded_keys)) {
+							$address2 = $aResult['address'][$sKey];
+						}      
+						break;
+					}
+				}
+				$pretty_name = $address1;
+				if($address2 != "") {
+					$pretty_name = $pretty_name.", ".$address2;
+				}
+				if($city != "") {
+					$pretty_name = $pretty_name.", ".$city;
+				}
+				if($country != "") {
+					$pretty_name = $pretty_name.", ".$country;
+				}
+			}
+
+			if($pretty_name != "") {
+				return $pretty_name;
+			} else {
+				return $aResult['langaddress'];
+			}
+		} // end getPrettyName
 
 	} // end class
 
