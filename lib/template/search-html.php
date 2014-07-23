@@ -9,7 +9,9 @@
 	<base href="<?php echo CONST_Website_BaseURL;?>" />
 	<link href="nominatim.xml" rel="search" title="Nominatim Search" type="application/opensearchdescription+xml" />
 	<link href="css/search.css" rel="stylesheet" type="text/css" />
+	<link href="css/autocomplete.css" rel="stylesheet" type="text/css" />
 
+	<script src="js/autocomplete.js" type="text/javascript"></script>
 	<script src="js/OpenLayers.js" type="text/javascript"></script>
 	<script src="js/tiles.js" type="text/javascript"></script>
 	<script src="js/prototype-1.6.0.3.js" type="text/javascript"></script>
@@ -147,11 +149,11 @@
 	<div id="seachheaderfade1"></div><div id="seachheaderfade2"></div><div id="seachheaderfade3"></div><div id="seachheaderfade4"></div>
 
 	<div id="seachheader">
-		<form accept-charset="UTF-8" action="<?php echo CONST_Website_BaseURL; ?>search.php" method="get">
+		<form id="searchform" accept-charset="UTF-8" action="<?php echo CONST_Website_BaseURL; ?>search.php" method="get">
 			<table border="0" width="100%" summary="header">
 				<tr>
-					<td valign="middle" style="width:30px;"><img alt="logo" src="images/logo.gif" /></td>
-					<td valign="middle" style="width:400px;"><input id="q" name="q" value="<?php echo htmlspecialchars($sQuery); 
+					<td valign="middle" style="width:30px;"><img alt="logo" src="images/mzk.png" style="width:90px;margin-right:10px;" /></td>
+					<td valign="middle" style="width:400px;"><input id="q" name="q" autofocus="autofocus" autocomplete="off" value="<?php echo htmlspecialchars($sQuery); 
 ?>" style="width:270px;" /><input type="text" id="viewbox" style="width:120px;" name="viewbox" /></td>
 					<td style="width:80px;"><input type="submit" value="Search"/></td>
 <?php if (CONST_Search_AreaPolygons) { ?>					<td style="width:100px;"><input type="checkbox" value="1" name="polygon" <?php if ($bAsText) echo "checked='checked'"; ?>/> Highlight</td>
@@ -293,6 +295,7 @@ init();
 	}
 ?>
 </script>
+	<script type="text/javascript">autocomplete()</script>
 </body>
 
 </html>

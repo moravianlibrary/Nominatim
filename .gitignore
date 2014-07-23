@@ -27,3 +27,5 @@ compile
 data/wiki_import.sql
 data/wiki_specialphrases.sql
 data/osmosischange.osc
+
+website/js/autocomplete.js

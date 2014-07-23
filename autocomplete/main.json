@@ -1,0 +1,27 @@
+{
+  "id": "autocomplete",
+
+  "inputs": "src/main.js",
+  "paths": ".",
+
+  "define": {
+    "goog.DEBUG": false
+  },
+
+  "mode": "SIMPLE",
+  "level": "VERBOSE",
+
+  "checks": {
+//    "checkTypes": "ERROR", /* Compile error in the Closure Library */
+    "checkRegExp": "ERROR",
+    "checkVars": "ERROR",
+    "deprecated": "ERROR",
+    "fileoverviewTags": "ERROR",
+    "invalidCasts": "ERROR",
+    "missingProperties": "ERROR",
+    "nonStandardJsDocs": "ERROR",
+    "undefinedVars": "ERROR"
+  },
+
+  "jsdoc-html-output-path": "."
+}
