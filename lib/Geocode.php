@@ -1817,7 +1817,7 @@
 		} // end lookup()
 
 		private function buildGazetteerName($aResult) {
-			$pretty_name = "";		
+			$gazetteer_name = "";		
 			$city = "";
 			$country = $aResult['address']['country'];
 			if($aResult['address']['country_code'] == 'us') {
@@ -1841,80 +1841,80 @@
 
 			// House Number
 			if($aResult['type'] == "house") {
-				$pretty_name = $aResult['address']['road']." ".$aResult['address']['house_number'].", ".$city.", ".$country;
+				$gazetteer_name = $aResult['address']['road']." ".$aResult['address']['house_number'].", ".$city.", ".$country;
 			}
 			// country
 			else if($aResult['type'] == "country") {
 				if($aResult['address']['country_code'] == 'us') {
-					$pretty_name = "USA";
+					$gazetteer_name = "USA";
 				} else {
-					$pretty_name = $country;
+					$gazetteer_name = $country;
 				}
 			}
 			// state
 			else if($aResult['type'] == "state") {
 				if($aResult['address']['country_code'] == 'us') {
-					$pretty_name = $country;
+					$gazetteer_name = $country;
 				} else {
-					$pretty_name = $aResult['address']['state'].", ".$country;
+					$gazetteer_name = $aResult['address']['state'].", ".$country;
 				}
 			}
 			// county
 			else if($aResult['type'] == "county") {
-				$pretty_name = $aResult['address']['county'].", ".$country;
+				$gazetteer_name = $aResult['address']['county'].", ".$country;
 			}
 			// City
 			else if($aResult['type'] == "city" || $aResult['type'] == "town") {
-				$pretty_name = $city.", ".$country;
+				$gazetteer_name = $city.", ".$country;
 			}
 			// village
 			else if($aResult['type'] == "village") {
-				$pretty_name = $aResult['address']['village'].", ".$city.", ".$country;
+				$gazetteer_name = $aResult['address']['village'].", ".$city.", ".$country;
 			}
 			//suburb
 			else if($aResult['type'] == 'suburb') {
-				$pretty_name = $aResult['address']['suburb'].", ".$city.", ".$country;
+				$gazetteer_name = $aResult['address']['suburb'].", ".$city.", ".$country;
 			}
 			// hamlet
 			else if($aResult['type'] == "hamlet") {
-				$pretty_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
+				$gazetteer_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
 			}
 
 			else if($aResult['type'] == "administrative") {
 				//suburb  
 				if(isset($aResult['address']['suburb'])) {
-					$pretty_name = $aResult['address']['suburb'].", ".$city.", ".$country;
+					$gazetteer_name = $aResult['address']['suburb'].", ".$city.", ".$country;
 				} 
 				//hamlet
 				else if(isset($aResult['address']['hamlet'])) {
-					$pretty_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
+					$gazetteer_name = $aResult['address']['hamlet'].", ".$city.", ".$country;
 				}
 				//village
 				else if(isset($aResult['address']['village'])) {
-					$pretty_name = $aResult['address']['village'].", ".$city.", ".$country;
+					$gazetteer_name = $aResult['address']['village'].", ".$city.", ".$country;
 				}
 				// City
 				else if(isset($aResult['address']['city'])) {
-					$pretty_name = $city.", ".$country;
+					$gazetteer_name = $city.", ".$country;
 				}
 				else if(isset($aResult['address']['administrative'])) {
-					$pretty_name = $aResult['address']['administrative'].", ".$country;
+					$gazetteer_name = $aResult['address']['administrative'].", ".$country;
 				}
 				else if(isset($aResult['address']['county'])) {
-					$pretty_name = $aResult['address']['county'].", ".$country;
+					$gazetteer_name = $aResult['address']['county'].", ".$country;
 				}
 				else if(isset($aResult['address']['state'])) {
 					if($aResult['address']['country_code'] == 'us') {
-						$pretty_name = $country;
+						$gazetteer_name = $country;
 					} else {
-						$pretty_name = $aResult['address']['state'].", ".$country;
+						$gazetteer_name = $aResult['address']['state'].", ".$country;
 					}
 				}
 				else if(isset($aResult['address']['country'])) {
 					if($aResult['address']['country_code'] == 'us') {
-						$pretty_name = "USA";
+						$gazetteer_name = "USA";
 					} else {
-						$pretty_name = $country;
+						$gazetteer_name = $country;
 					}
 				}
 			}
@@ -1933,24 +1933,24 @@
 						break;
 					}
 				}
-				$pretty_name = $address1;
+				$gazetteer_name = $address1;
 				if($address2 != "") {
-					$pretty_name = $pretty_name.", ".$address2;
+					$gazetteer_name = $gazetteer_name.", ".$address2;
 				}
 				if($city != "") {
-					$pretty_name = $pretty_name.", ".$city;
+					$gazetteer_name = $gazetteer_name.", ".$city;
 				}
 				if($country != "") {
-					$pretty_name = $pretty_name.", ".$country;
+					$gazetteer_name = $gazetteer_name.", ".$country;
 				}
 			}
 
-			if($pretty_name != "") {
-				return $pretty_name;
+			if($gazetteer_name != "") {
+				return $gazetteer_name;
 			} else {
 				return $aResult['langaddress'];
 			}
-		} // end getPrettyName
+		} // end buildGazetteerName
 
 	} // end class
 
