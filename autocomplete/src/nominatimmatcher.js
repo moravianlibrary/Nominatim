@@ -85,7 +85,7 @@ goog.ui.ac.NominatimMatcher.prototype.requestMatchingRows =
   var suffix = window['GAZETTEER_SUFFIX'] || '';
   this.payload_['q'] = token + suffix;
   this.payload_['format'] = 'json';
-  this.payload_['addressdetails'] = 1;
+  this.payload_['gazetteer'] = 1;
   this.payload_['limit'] = maxMatches;
 
   // Ignore token which is empty or just one letter

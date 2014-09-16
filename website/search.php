@@ -67,6 +67,12 @@
 		$oGeocode->setIncludePolygonAsKML($bAsKML);
 		$oGeocode->setIncludePolygonAsSVG($bAsSVG);
 	}
+	
+	// Gazetteer mode
+	if (isset($_GET['gazetteer']))
+	{
+		$oGeocode->setGazetteerMode((bool)$_GET['gazetteer']);
+	}
 
 	$oGeocode->loadParamArray($_GET);
 

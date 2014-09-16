@@ -12,6 +12,8 @@
 		protected $bIncludePolygonAsGeoJSON = false;
 		protected $bIncludePolygonAsKML = false;
 		protected $bIncludePolygonAsSVG = false;
+		
+		protected $bGazetteerMode = false;
 
 		protected $aExcludePlaceIDs = array();
 		protected $bDeDupe = true;
@@ -100,6 +102,16 @@
 		function setIncludePolygonAsSVG($b = true)
 		{
 			$this->bIncludePolygonAsSVG = $b;
+		}
+		
+		function getGazetteerMode()
+		{
+			return $this->bGazetteerMode;
+		}
+		
+		function setGazetteerMode($b = true)
+		{
+			$this->bGazetteerMode = $b;
 		}
 
 		function setDeDupe($bDeDupe = true)
@@ -1716,7 +1728,7 @@
 					$aResult['label'] = $aClassType[$aResult['class'].':'.$aResult['type']]['label'];
 				}
 
-				if ($this->bIncludeAddressDetails)
+				if ($this->bIncludeAddressDetails || $this->bGazetteerMode)
 				{
 					$aResult['address'] = getAddressDetails($this->oDB, $sLanguagePrefArraySQL, $aResult['place_id'], $aResult['country_code']);
 					if ($aResult['extra_place'] == 'city' && !isset($aResult['address']['city']))
@@ -1740,7 +1752,15 @@
 
 				$aResult['importance'] = $aResult['importance'] + ($iCountWords*0.1); // 0.1 is a completely arbitrary number but something in the range 0.1 to 0.5 would seem right
 
-				$aResult['name'] = $this->getPrettyName($aResult);
+				if ($this->bGazetteerMode)
+				{
+					$aResult['name'] = $this->buildGazetteerName($aResult);
+				}
+				else
+				{
+					$aResult['name'] = $aResult['langaddress'];
+				}
+				
 				// secondary ordering (for results with same importance (the smaller the better):
 				//   - approximate importance of address parts
 				$aResult['foundorder'] = -$aResult['addressimportance']/10;
@@ -1796,7 +1816,7 @@
 
 		} // end lookup()
 
-		private function getPrettyName($aResult) {
+		private function buildGazetteerName($aResult) {
 			$pretty_name = "";		
 			$city = "";
 			$country = $aResult['address']['country'];
