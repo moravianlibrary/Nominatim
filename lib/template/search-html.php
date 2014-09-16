@@ -155,14 +155,14 @@
 					<td valign="middle" style="width:30px;"><img alt="logo" src="images/mzk.png" style="width:90px;margin-right:10px;" /></td>
 					<td valign="middle" style="width:400px;"><input id="q" name="q" autofocus="autofocus" autocomplete="off" value="<?php echo htmlspecialchars($sQuery); 
 ?>" style="width:270px;" /><input type="text" id="viewbox" style="width:120px;" name="viewbox" /></td>
-					<td style="width:80px;"><input type="submit" value="Search"/></td>
-<?php if (CONST_Search_AreaPolygons) { ?>					<td style="width:100px;"><input type="checkbox" value="1" name="polygon" <?php if ($bAsText) echo "checked='checked'"; ?>/> Highlight</td>
+					<td style="width:80px;"><input type="submit" value="Hledat"/></td>
+<?php if (CONST_Search_AreaPolygons) { ?>					<td style="width:100px;"><input type="checkbox" value="1" name="polygon" <?php if ($bAsText) echo "checked='checked'"; ?>/> Podbarvit</td>
 <td style="text-align:right;">Data: <?php echo $sDataDate; ?></td>
 <td style="text-align:right;">
-<a href="http://wiki.openstreetmap.org/wiki/Nominatim" target="_blank">Documentation</a> | <a href="http://wiki.openstreetmap.org/wiki/Nominatim/FAQ" 
+<a href="http://wiki.openstreetmap.org/wiki/Nominatim" target="_blank">Dokumentace</a> | <a href="http://wiki.openstreetmap.org/wiki/Nominatim/FAQ" 
 target="_blank">FAQ</a></td>
 
-<?php } ?>					<td style="text-align:right;"><?php if ($sQuery) { ?><input type="button" value="Report Problem With Results" onclick="$('report').style.visibility=($('report').style.visibility=='hidden'?'visible':'hidden')"/><?php } ?></td>
+<?php } ?>					<td style="text-align:right;"><?php if ($sQuery) { ?><input type="button" value="Nahlásit problém s výsledky" onclick="$('report').style.visibility=($('report').style.visibility=='hidden'?'visible':'hidden')"/><?php } ?></td>
 				</tr>
 			</table>
 		</form>
@@ -215,7 +215,7 @@ target="_blank">FAQ</a></td>
 	{
 		if ($sMoreURL)
 		{
-			echo '<div class="more"><a href="'.htmlentities($sMoreURL).'">Search for more results</a></div>';
+			echo '<div class="more"><a href="'.htmlentities($sMoreURL).'">Najít další výsledky</a></div>';
 		}
 	}
 	else
@@ -225,7 +225,7 @@ target="_blank">FAQ</a></td>
 
 ?>
 		<div class="disclaimer">Addresses and postcodes are approximate
-			<input type="button" value="Report Problem" onclick="$('report').style.visibility=($('report').style.visibility=='hidden'?'visible':'hidden')"/>
+			<input type="button" value="Nahlásit problém" onclick="$('report').style.visibility=($('report').style.visibility=='hidden'?'visible':'hidden')"/>
 		</div>
 	</div>
 <?php
